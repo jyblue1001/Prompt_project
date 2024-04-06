@@ -6,12 +6,12 @@ app = Flask(__name__)
 
 dic = {0 : 'Angry', 1 : 'Disgust', 2 : 'Fear', 3 : 'Happy', 4 : 'Sad', 5 : 'Surprise', 6 : 'Neutral'}
 
-model = load_model('model.h5')
+# model = load_model('my_model.h5')
 
-model.make_predict_function()
+# model.make_predict_function()
 
 def predict_label(img_path):
-	i = image.load_img(img_path, target_size=(100,100))
+	i = image.load_img(img_path, target_size=(48,48))
 	i = image.img_to_array(i)/255.0
 	i = i.reshape(1, 48, 48,3)
 	p = model.predict_classes(i)
@@ -22,10 +22,6 @@ def predict_label(img_path):
 @app.route("/", methods=['GET', 'POST'])
 def main():
 	return render_template("index.html")
-
-@app.route("/about")
-def about_page():
-	return "Please subscribe  Artificial Intelligence Hub..!!!"
 
 @app.route("/submit", methods = ['GET', 'POST'])
 def get_output():
@@ -42,4 +38,4 @@ def get_output():
 
 if __name__ =='__main__':
 	#app.debug = True
-	app.run(debug = True)
+	app.run(port=3000, debug = True)
